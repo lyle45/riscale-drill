@@ -1,0 +1,39 @@
+{
+	"info": {
+		"_postman_id": "f8e4a423-9d14-48b6-8771-fe2de47825b1",
+		"name": "test",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "test",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"page\": 1,\n    \"take\": 5,\n    \"filter\": [\n    \t{\n    \t\t\"field\": \"status\",\n    \t\t\"op\": \"=\",\n    \t\t\"value\": \"1\"\n    \t},{\n    \t\t\"field\": \"osName\",\n    \t\t\"op\": \"like\",\n    \t\t\"value\": \"Ubuntu\"\n    \t}\n    ],\n    \"sort\": \"id\",\n    \"order\": \"asc\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8088/devices",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8088",
+					"path": [
+						"devices"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

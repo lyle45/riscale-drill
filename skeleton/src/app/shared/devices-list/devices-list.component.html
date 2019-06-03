@@ -1,0 +1,97 @@
+<div>
+	<div class="filter-buttons">
+		<mat-button-toggle-group
+			(change)="setOsFilter(osType)"
+			[(ngModel)]="osType"
+		>
+			<mat-button-toggle
+				*ngFor="let os of OsTypes | keyvalue | repeatHalf"
+				[disabled]="!availableOs.includes(+os.key)"
+				[value]="+os.key"
+			>
+				<kt-os-avatar
+					[isOnline]="false"
+					[osType]="os.key"
+				></kt-os-avatar>
+			</mat-button-toggle>
+		</mat-button-toggle-group>
+		<mat-slide-toggle
+			(change)="toggleStatusFilter($event)"
+			[checked]="online"
+			labelPosition="before"
+		>
+			Online
+		</mat-slide-toggle>
+	</div>
+	<div style="display: flex;">
+		<mat-form-field>
+			<input
+				#search
+				(keyup)="applySearch(search.value)"
+				matInput
+				placeholder="Filter"
+			/>
+		</mat-form-field>
+		<div class="page-controls mat-form-field-wrapper">
+			<button
+				(click)="page.previousPage()"
+				[disabled]="page.pageIndex === 0"
+				color="primary"
+				mat-button
+			>
+				<
+			</button>
+			<button
+				(click)="page.nextPage()"
+				[disabled]="!devicesService.hasNextPage"
+				color="primary"
+				mat-button
+			>
+				>
+			</button>
+			<mat-paginator
+				#page
+				[hidePageSize]="true"
+				[pageSize]="5"
+				length="100"
+				pageIndex="false"
+				style="display: none;"
+			></mat-paginator>
+		</div>
+	</div>
+	<table [dataSource]="devicesService.devices$" mat-table>
+		<ng-container matColumnDef="select">
+			<mat-cell *matCellDef="let device" class="checkbox-column">
+				<mat-checkbox
+					(click)="$event.preventDefault()"
+					[checked]="checkIfSelected(device.id)"
+				>
+				</mat-checkbox>
+			</mat-cell>
+		</ng-container>
+
+		<ng-container matColumnDef="host">
+			<mat-cell *matCellDef="let device">
+				<kt-os-avatar
+					[isOnline]="+device.status === 1"
+					[osType]="device.osType"
+				></kt-os-avatar>
+				{{ device.host }}
+			</mat-cell>
+		</ng-container>
+
+		<ng-container matColumnDef="ip">
+			<mat-cell *matCellDef="let device" align="right">
+				<span class="ip-cell mat-caption"> {{ device.ip }} </span>
+			</mat-cell>
+		</ng-container>
+
+		<mat-row
+			*matRowDef="let device; columns: displayedColumns"
+			(click)="selectDevice(device)"
+			mat-ripple
+			style="cursor: pointer"
+		></mat-row>
+	</table>
+
+</div>

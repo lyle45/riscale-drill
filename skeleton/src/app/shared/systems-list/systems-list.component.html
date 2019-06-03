@@ -1,0 +1,49 @@
+<table [dataSource]="systemsService.systems$" mat-table>
+	<ng-container matColumnDef="systems">
+		<td *matCellDef="let system" mat-cell>
+			<div class="mat-body-2">For {{ system.name }}</div>
+			<br/>
+			{{ system.language }}:
+			<kt-os-avatar
+				*ngFor="let osType of system.availableOs"
+				[osType]="osType"
+				style='display: inline-block;'
+			></kt-os-avatar>
+		</td>
+	</ng-container>
+
+	<ng-container matColumnDef="devices">
+		<td *matCellDef="let system" mat-cell>
+			<div>
+				Hosts:
+				<mat-menu #devicesMenu="matMenu" class="devices-menu">
+					<kt-devices-list
+						(click)="$event.stopPropagation()"
+						[availableOs]="system.availableOs"
+						[selectedDevices]="system.selectedDevices"
+					></kt-devices-list>
+				</mat-menu>
+				<button
+					[matMenuTriggerFor]="devicesMenu"
+					color="primary"
+					mat-button
+				>
+					+
+				</button>
+			</div>
+			<mat-chip-list>
+				<div *ngFor="let device of system.selectedDevices">
+					<mat-chip color="primary">
+						<kt-os-avatar
+							[isOnline]="+device.status === 1"
+							[osType]="device.osType"
+						></kt-os-avatar>
+						{{ device.host }}
+					</mat-chip>
+				</div>
+			</mat-chip-list>
+		</td>
+	</ng-container>
+
+	<tr *matRowDef="let system; columns: ['systems', 'devices']" mat-row></tr>
+</table>

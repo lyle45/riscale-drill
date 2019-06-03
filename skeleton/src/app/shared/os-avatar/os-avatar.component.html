@@ -1,0 +1,12 @@
+<div style='position: relative;'>
+	<mat-icon
+		[fontIcon]="osIcons[osType]"
+		fontSet="fa"
+	></mat-icon>
+	<mat-icon
+		*ngIf='isOnline'
+		class='online-status'
+		fontIcon="fa-circle"
+		fontSet="fa"
+	></mat-icon>
+</div>

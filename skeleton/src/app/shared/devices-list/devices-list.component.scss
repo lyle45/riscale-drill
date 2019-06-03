@@ -1,0 +1,31 @@
+table {
+	width: 100%;
+}
+
+.mat-form-field {
+	font-size: 14px;
+	width: 100%;
+}
+
+.mat-column-ip {
+	color: rgba(0, 0, 0, 0.30);
+	display: flex;
+	justify-content: flex-end;
+}
+
+.filter-buttons {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+.page-controls {
+	display: flex;
+	margin-left: 1em;
+}
+
+.mat-column-select {
+	flex-grow: 0;
+	padding-right: 1em;
+	padding-left: 1em;
+}
